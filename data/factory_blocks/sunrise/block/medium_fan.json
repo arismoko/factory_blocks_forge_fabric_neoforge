@@ -9,7 +9,6 @@
     "facing": "east"
   },
   "shapes": {
-    "property": "facing",
     "values": {
       "north": [
         [
@@ -51,6 +50,9 @@
           2.0
         ]
       ]
-    }
+    },
+    "properties": [
+      "facing"
+    ]
   }
 }

@@ -1,68 +1,33 @@
-# Factory Blocks [Forge/Fabric/NeoForge] — a Horizon port
+# Factory Blocks for Sunrise
 
-**Factory Blocks [Forge/Fabric/NeoForge]** is a Minecraft mod. This repository is a **port of it to [Horizon](https://github.com/horizon-rust/horizon)**, the Rust engine for Minecraft Java 26.3. It carries the complete source of the port plus the content files it ships, and installs as a single `.hmod` package.
+49 industrial decorative blocks: panels, grates, vents, fans, pipes and hazard stripes.
 
-Upstream: [matthewperiut/factory_blocks](https://github.com/matthewperiut/factory_blocks) — licence **MIT**.
+A port of [Factory Blocks](https://github.com/matthewperiut/factory_blocks) by slaincow to [Sunrise](https://playsunrise.net) (Minecraft Java 26.3), as a content mod: the original's blocks, models, textures and strings, with no code.
 
-| | |
-|---|---|
-| Upstream mod | Factory Blocks [Forge/Fabric/NeoForge] ([source](https://github.com/matthewperiut/factory_blocks)) |
-| Ported to | Horizon 0b14f8a, Minecraft Java 26.3, mod API `0.2` |
-| Package | `factory_blocks.hmod` (install it with the Horizon launcher) |
-| Licence | **MIT** — the upstream mod's licence; see [Licence and credit](#licence-and-credit) |
+## What it does
 
-## What this port implements
+- 49 full-block industrial decorations: factory panels, grating, vents, riveted plates, pipes, hazard stripes and machinery faces.
+- Fans that face the way you place them, including the always-running ones.
+- The original's connected-texture data, its recipes, drops and creative tab.
 
-- full-cube shape, hardness 2.0, blast resistance 2.0, iron's metal sound,
-- horizontal fan `facing`, default east, and the placement rule (proved in the
-- the `on` state and all 82 state bindings.
-- **Redstone fans do not switch.** `RedstoneFanBlock.neighborUpdate` is a
-- **Per-item tooltips.** `TooltipBlockItem.appendHoverText` prints
-- **The custom `factory_blocks:metal_sound` SoundType.** `properties.sounds`
-- **The vanilla `minecraft:building_blocks` tab.** A content mod cannot append
-- **Chipped/Chisel integration.** The two `chipped:*` recipes and the Chisel
+## Differences from the original
 
-## Not yet ported
+- The three redstone fans don't switch on with redstone; that is Java code.
+- Blocks show no tooltips, and use the iron block's sounds instead of the mod's own metal sound.
 
-- full-cube shape, hardness 2.0, blast resistance 2.0, iron's metal sound,
-- horizontal fan `facing`, default east, and the placement rule (proved in the
-- the `on` state and all 82 state bindings.
-- **Redstone fans do not switch.** `RedstoneFanBlock.neighborUpdate` is a
-- **Per-item tooltips.** `TooltipBlockItem.appendHoverText` prints
-- **The custom `factory_blocks:metal_sound` SoundType.** `properties.sounds`
-- **The vanilla `minecraft:building_blocks` tab.** A content mod cannot append
-- **Chipped/Chisel integration.** The two `chipped:*` recipes and the Chisel
+## Building
 
-## Installing
+With the Sunrise mod tool (`cargo sunrise-mod`, from the Sunrise SDK):
 
-1. Install the [Horizon launcher](https://github.com/horizon-rust/horizon/releases) (0.2.70 or newer).
-2. Add `factory_blocks.hmod` to the instance's mods.
-3. The package is pinned to a specific Horizon build; the launcher checks that pin.
-
-## Licence and credit
-
-Factory Blocks [Forge/Fabric/NeoForge] was created by its upstream authors; the code, models and assets in the original mod
-remain theirs and are used here under **MIT**. The Rust in this repository is a clean-room
-rewrite for Horizon, not a translation of the original source.
-
-- `LICENSE` — the upstream licence text.
-- `LICENSE-NOTICE.md` — what this port carries and where it came from.
-- The upstream project: https://github.com/matthewperiut/factory_blocks
-
-## Technical details
-
-```
-horizon-mod.toml   package manifest (id, version, api, [native] pin)
-Cargo.toml         the crate; depends on `horizon-mod-api` from the fetched SDK
-src/               lib.rs (the one `impl Hooks`), runtime.rs (pure logic + tests), glue
-assets/ data/      the content the package ships
-tools/             content generators and the e2e scenario
+```sh
+cargo sunrise-mod check
+cargo sunrise-mod build    # target/sunrise-mod/factory_blocks.smod
 ```
 
-- Build: `cargo horizon-mod build` (packages; it does not compile against the game).
-- Test: `cargo test`, `cargo clippy --all-targets -- -D warnings`.
-- In-game: `ports/tools/launcher-game.sh run factory_blocks` in the campaign tree, or install the
-  `.hmod` and play; the harness scenario is `tools/e2e.sh`.
+This version is made for the Sunrise Dev build `dev-2026-11-22-7cfdf81`.
 
-This repository is generated from the campaign's port at `ports/factory_blocks/`; the port's own
-`notes.md` is the full record (decisions, traps, evidence).
+## Licence and credits
+
+Factory Blocks is by slaincow (https://github.com/matthewperiut/factory_blocks). Its textures, models, recipes and strings are slaincow's and are used here under the **MIT licence**, the original's; `LICENSE` holds the text and its copyright notice, and `LICENSE-NOTICE.md` says what this port carries.
+
+Carried to Minecraft 26.3 by AdLf0208 ([AdLf0208/factory_blocks_forge_fabric_neoforge](https://github.com/AdLf0208/factory_blocks_forge_fabric_neoforge)), and ported to Sunrise by arismoko. This port is distributed under the same licence.

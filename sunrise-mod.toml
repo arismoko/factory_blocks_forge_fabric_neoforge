@@ -1,0 +1,10 @@
+# Factory Blocks for Sunrise: content only (data/ and assets/), no code.
+id = "factory_blocks"
+name = "Factory Blocks"
+version = "1.4.2"
+description = "49 industrial decorative blocks: panels, grates, vents, fans, pipes and hazard stripes."
+authors = ["slaincow"]
+license = "MIT"
+credits = "Ported to Minecraft 26.3 by AdLf0208, and to Sunrise by arismoko."
+homepage = "https://github.com/arismoko/factory_blocks_forge_fabric_neoforge"
+side = "both"
