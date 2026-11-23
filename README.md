@@ -7,12 +7,11 @@ A port of [Factory Blocks](https://github.com/matthewperiut/factory_blocks) by s
 ## What it does
 
 - 49 full-block industrial decorations: factory panels, grating, vents, riveted plates, pipes, hazard stripes and machinery faces.
-- Fans that face the way you place them, including the always-running ones.
+- Fans that face the way you place them, including the always-running ones. As in the original's 26.3 build, the three redstone fans stay off: their redstone listener there replaces no game method, so nothing calls it.
 - The original's connected-texture data, its recipes, drops and creative tab.
 
 ## Differences from the original
 
-- The three redstone fans don't switch on with redstone; that is Java code.
 - Blocks show no tooltips, and use the iron block's sounds instead of the mod's own metal sound.
 
 ## Building
