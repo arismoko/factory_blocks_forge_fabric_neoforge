@@ -1,0 +1,10 @@
+[package]
+name = "factory_blocks"
+version = "1.4.4"
+edition = "2024"
+license = "MIT"
+description = "Factory Blocks for Sunrise: the blocks' tooltips, metal sounds and creative placement"
+
+[dependencies]
+# The pinned SDK's API crate, fetched into .sunrise/sdk/ by any `cargo sunrise-mod` command.
+sunrise-mod-api = { path = ".sunrise/sdk/api/crates/sunrise-mod-api" }

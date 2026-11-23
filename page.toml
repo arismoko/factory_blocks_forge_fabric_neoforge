@@ -2,17 +2,18 @@ summary = "49 industrial decorative blocks: panels, grates, vents, fans, pipes a
 description = """
 49 industrial decorative blocks: panels, grates, vents, fans, pipes and hazard stripes.
 
-A port of [Factory Blocks](https://github.com/matthewperiut/factory_blocks) by slaincow to [Sunrise](https://playsunrise.net) (Minecraft Java 26.3), as a content mod: the original's blocks, models, textures and strings, with no code.
+A port of [Factory Blocks](https://github.com/matthewperiut/factory_blocks) by slaincow to [Sunrise](https://playsunrise.net) (Minecraft Java 26.3), as a content mod with a small native part: the original's blocks, models, textures and strings, plus its tooltips, metal sounds and creative placement.
 
 What it does:
 
 - 49 full-block industrial decorations: factory panels, grating, vents, riveted plates, pipes, hazard stripes and machinery faces.
 - Fans that face the way you place them, including the always-running ones. As in the original's 26.3 build, the three redstone fans stay off: their redstone listener there replaces no game method, so nothing calls it.
+- A grey name line on every block's tooltip, the mod's own metal sound for placing, walking on, landing on and breaking them, and a place at the end of the Building Blocks tab.
 - The original's connected-texture data, its recipes, drops and creative tab.
 
 Differences from the original:
 
-- Blocks show no tooltips, and use the iron block's sounds instead of the mod's own metal sound.
+- Mining a block plays the iron block's hit sound, not the metal one: the game asks no mod for that sound.
 """
 categories = ["decoration"]
 
