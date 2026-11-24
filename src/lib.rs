@@ -4,7 +4,8 @@
 //! | Moment | Where | What it does |
 //! |---|---|---|
 //! | `register` | [`declare`] | attaches [`Metal`] to every block and [`Tip`] to every item |
-//! | `sound_type` | [`Metal`] | the blocks' own `metal_sound` event (`FactorySound.FACTORY_BLOCKS`), except the mining hit sound the game asks no part for |
+//! | `sound_type` | [`Metal`] | the blocks' own `metal_sound` event (`FactorySound.FACTORY_BLOCKS`) |
+//! | `play_hit_sound` | [`Metal`] | the same event while a block is mined |
 //! | `tooltip` | [`Tip`] | the grey name line (`TooltipBlockItem.appendHoverText`) |
 //! | `build_creative_mode_tab_contents` | this module | adds the blocks to Building Blocks |
 
@@ -104,6 +105,26 @@ impl BlockPart for Metal {
         event: &mut mod_api::SoundTypeEvent<'_>,
     ) {
         metal_sound(event.sound);
+    }
+
+    /// The mining hit sound (`ClientLevel.playBreakingSound` with the `FACTORY_BLOCKS` sound
+    /// type): the metal event at the block's centre, at `(1 + 1) / 8` and pitch `1 * 0.5`.
+    fn play_hit_sound(
+        &self,
+        host: &mut dyn mod_api::ClientHost,
+        event: &mut mod_api::PlayHitSoundEvent,
+    ) -> mod_api::Flow {
+        let pos = event.pos;
+        let centre = [
+            f64::from(pos.x) + 0.5,
+            f64::from(pos.y) + 0.5,
+            f64::from(pos.z) + 0.5,
+        ];
+        let sound = mod_api::SoundPlay::at(METAL_SOUND, mod_api::SoundSource::Blocks, centre)
+            .with_volume(0.25)
+            .with_pitch(0.5);
+        host.play_local_sound(&sound, 0);
+        mod_api::Flow::Cancel
     }
 }
 

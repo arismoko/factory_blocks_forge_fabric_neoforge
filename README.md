@@ -11,10 +11,6 @@ A port of [Factory Blocks](https://github.com/matthewperiut/factory_blocks) by s
 - A grey name line on every block's tooltip, the mod's own metal sound for placing, walking on, landing on and breaking them, and a place at the end of the Building Blocks tab.
 - The original's connected-texture data, its recipes, drops and creative tab.
 
-## Differences from the original
-
-- Mining a block plays the iron block's hit sound, not the metal one: the game asks no mod for that sound.
-
 ## Building
 
 With the Sunrise mod tool (`cargo sunrise-mod`, from the Sunrise SDK):
