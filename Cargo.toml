@@ -1,6 +1,6 @@
 [package]
 name = "factory_blocks"
-version = "1.4.4"
+version = "1.4.5"
 edition = "2024"
 license = "MIT"
 description = "Factory Blocks for Sunrise: the blocks' tooltips, metal sounds and creative placement"
