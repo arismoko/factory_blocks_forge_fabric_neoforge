@@ -97,7 +97,7 @@ dependencies = [
 
 [[package]]
 name = "factory_blocks"
-version = "1.4.6"
+version = "1.4.7"
 dependencies = [
  "sunrise-mod-api",
 ]
