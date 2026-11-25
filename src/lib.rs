@@ -135,7 +135,7 @@ pub struct Tip {
 #[mod_api::sunrise_part]
 impl ItemPart for Tip {
     fn tooltip(&self, _host: &dyn mod_api::ClientHost, event: &mut TooltipEvent<'_, '_>) {
-        event
+        let _ = event
             .lines
             .push((Text::translate(self.key.clone(), Vec::new()), GRAY));
     }
