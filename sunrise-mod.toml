@@ -1,7 +1,7 @@
 # Factory Blocks for Sunrise: content in data/ and assets/, with a small native part in src/.
 id = "factory_blocks"
 name = "Factory Blocks"
-version = "1.4.5"
+version = "1.4.6"
 description = "49 industrial decorative blocks: panels, grates, vents, fans, pipes and hazard stripes."
 authors = ["slaincow", "arismoko"]
 license = "MIT"
