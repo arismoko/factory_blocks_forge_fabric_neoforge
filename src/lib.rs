@@ -13,7 +13,8 @@ use std::sync::OnceLock;
 
 use mod_api::{
     self, BlockPart, BlockSoundType, CreativeTabPlacement, CreativeTabVisibility, Hooks, HostSide,
-    ItemKey, ItemPart, ItemStack, Registrar, RegistrationContext, Text, TooltipEvent,
+    ItemKey, ItemPart, ItemStack, Registrar, RegistrationContext, SoundEventKey, Text,
+    TooltipEvent,
 };
 
 /// Every block and item the mod declares, in the order the original registers them
@@ -83,8 +84,8 @@ pub fn tooltip_key(name: &str) -> String {
 
 /// Point every sound of `sound` at the one metal event, with volume and pitch 1: the original's
 /// `FACTORY_BLOCKS` sound type.
-pub fn metal_sound(sound: &mut BlockSoundType) {
-    let event: std::sync::Arc<str> = METAL_SOUND.into();
+pub fn metal_sound(sound: &mut BlockSoundType, event: &SoundEventKey) {
+    let event = event.clone();
     sound.volume = 1.0;
     sound.pitch = 1.0;
     sound.break_sound = event.clone();
@@ -95,16 +96,14 @@ pub fn metal_sound(sound: &mut BlockSoundType) {
 }
 
 /// The blocks' sounds.
-pub struct Metal;
+pub struct Metal {
+    event: SoundEventKey,
+}
 
 #[mod_api::sunrise_part]
 impl BlockPart for Metal {
-    fn sound_type(
-        &self,
-        _context: &dyn mod_api::LoopContext,
-        event: &mut mod_api::SoundTypeEvent<'_>,
-    ) {
-        metal_sound(event.sound);
+    fn sound_type(&self, _level: mod_api::LevelSide<'_>, event: &mut mod_api::SoundTypeEvent<'_>) {
+        metal_sound(event.sound, &self.event);
     }
 
     /// The mining hit sound (`ClientLevel.playBreakingSound` with the `FACTORY_BLOCKS` sound
@@ -135,8 +134,8 @@ pub struct Tip {
 
 #[mod_api::sunrise_part]
 impl ItemPart for Tip {
-    fn tooltip(&self, _host: &dyn mod_api::ClientHost, event: &mut TooltipEvent<'_>) {
-        event
+    fn tooltip(&self, _host: &dyn mod_api::ClientHost, event: &mut TooltipEvent<'_, '_>) {
+        let _ = event
             .lines
             .push((Text::translate(self.key.clone(), Vec::new()), GRAY));
     }
@@ -146,10 +145,16 @@ static ITEMS: OnceLock<Vec<ItemKey>> = OnceLock::new();
 
 /// Attach the parts and keep the item keys for the creative tab.
 pub fn declare(r: &mut dyn Registrar) {
+    let event = SoundEventKey::parse(METAL_SOUND).expect("the metal event name is valid");
     let mut items = Vec::with_capacity(NAMES.len());
     for name in NAMES {
         let block = r.block_key(&format!("{MOD}:{name}"));
-        r.block_part(block, Metal);
+        r.block_part(
+            block,
+            Metal {
+                event: event.clone(),
+            },
+        );
         let item = r.item_key(&format!("{MOD}:{name}"));
         r.item_part(
             item,
@@ -174,20 +179,15 @@ impl Hooks for Mod {
     /// `RegisterBlocks.registerItemGroups`: every item goes to the end of Building Blocks.
     fn build_creative_mode_tab_contents(
         &self,
-        host: HostSide,
+        _host: HostSide<'_>,
         event: &mut mod_api::BuildCreativeModeTabContentsEvent<'_>,
     ) {
         if event.tab != "minecraft:building_blocks" {
             return;
         }
         let Some(items) = ITEMS.get() else { return };
-        let host: &dyn mod_api::Host = match &host {
-            HostSide::Server(host) => &**host,
-            HostSide::Client(host) => &**host,
-        };
         for item in items {
-            let _ = event.edit.insert(
-                host,
+            let _ = event.output.insert(
                 CreativeTabPlacement::Last,
                 ItemStack::of(*item),
                 CreativeTabVisibility::Both,
